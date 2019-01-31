@@ -64,6 +64,19 @@ $(function(){
         socket.emit('new message',message);
         
     }
+
+    socket.on('user left',(data)=>{
+        chat.append('\
+        <div class="badge badge-info " style="width:100%;" id="messages">\
+            <div class="row">\
+                <div class="col text-left">\
+                    <h6>'+data+' has left </h6>\
+                </div>\
+            </div>\
+        </div>\
+        ');
+       });
+
     socket.on('chat user',(newMessage)=>{
         chat.append('\
         <div class="badge badge-info " style="width:100%;" id="messages">\

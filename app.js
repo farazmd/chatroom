@@ -1,3 +1,4 @@
+
 const express = require('express');
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
@@ -52,6 +53,9 @@ io.on('connection',function(socket){
     socket.on('disconnect',(data)=>{
         Connections.splice(Connections.indexOf(socket),1);
         console.log(`Disconnected: ${Connections.length} Connections`);
+        if(socket.username!=null){
+            io.emit('user left',socket.username);
+        }
     });
     
     socket.on('new user',(data,next)=>{
@@ -60,7 +64,7 @@ io.on('connection',function(socket){
     });
 
     socket.on('get messages',(data)=>{
-        Message.find({}).limit(100)
+        Message.find({}).limit(100).sort({time:-1})
         .then(messages=>{
             socket.emit('messages',{
                 Messages:messages,}
