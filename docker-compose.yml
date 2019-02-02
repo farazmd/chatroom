@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  chatroom:
+    container_name: docker-chatroom
+    restart: always
+    build: .
+    ports:
+      - '80:5000'
+    links: 
+      - mongo
+  
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - '27017:27017'

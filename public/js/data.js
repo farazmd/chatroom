@@ -57,13 +57,13 @@ $(function(){
         ');
     });
 
-    // to receive info about the exited user and isplay to all the chat members
+    // to receive info about the exited user and display to all the chat members
     socket.on('user exit',(data)=>{
         chat.append('\
         <div class="badge badge-info " style="width:100%;" id="messages">\
             <div class="row">\
                 <div class="col text-left">\
-                    <h6>'+data+' has joined </h6>\
+                    <h6>'+data+' has left </h6>\
                 </div>\
             </div>\
         </div>\
