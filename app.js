@@ -1,3 +1,4 @@
+// required modules
 const express = require('express');
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
@@ -6,6 +7,8 @@ const helpers = require('handlebars-helpers')();
 const PORT = 5000;
 const app = new express();
 
+
+// Middlewares
 var hbs = exphbs.create({
     defaultLayout:'layout',
     helpers: helpers
@@ -21,8 +24,10 @@ app.use(express.static('public'));
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
+// Mongoose promise handling
 mongoose.Promise = global.Promise;
 
+// MongoDB connection to localhost
 mongoose.connect('mongodb://localhost/chatroom',{
     useMongoClient:true
 }).then(() =>{
@@ -34,6 +39,7 @@ mongoose.connect('mongodb://localhost/chatroom',{
 //globals
 Connections =[];
 
+// loading the message schema
 require('./models/messages');
 const Message = mongoose.model('message');
 
@@ -46,29 +52,34 @@ app.get('/exit',(req,res)=>{
 })
 
 io.on('connection',function(socket){
-    Connections.push(socket);
+    Connections.push(socket);// socket connection on server side
     console.log(`Connected : ${Connections.length} Connections`);
     
-    socket.on('disconnect',(data)=>{
+    socket.on('disconnect',(data)=>{ // socket disconnection to server side
         Connections.splice(Connections.indexOf(socket),1);
         console.log(`Disconnected: ${Connections.length} Connections`);
+        io.emit('user exit',socket.username);
     });
     
+    // to receive user data
     socket.on('new user',(data,next)=>{
         socket.username = data.User;
         next(true);
     });
 
+    // to send all the messages
     socket.on('get messages',(data)=>{
         Message.find({}).limit(100)
         .then(messages=>{
             socket.emit('messages',{
                 Messages:messages,}
             );
+            // emits user entry to all chat users
             io.emit('user added',socket.username);
         });
     });
 
+    // to receive new message data
     socket.on('new message',(data)=>{
         var message = {
             message:data.message,
@@ -78,6 +89,7 @@ io.on('connection',function(socket){
         .then(message=>{
             console.log('saved');
         });
+        // emits the message to all users
         io.emit('chat user',message);
     });
 });
