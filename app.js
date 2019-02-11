@@ -28,7 +28,7 @@ const io = require('socket.io')(http);
 mongoose.Promise = global.Promise;
 
 // MongoDB connection to localhost
-mongoose.connect('mongodb://localhost:27017/chatroom',{
+mongoose.connect('mongodb://mongo:27017/docker-chatroom',{
     useMongoClient:true
 }).then(() =>{
     console.log('Connected to MongoDB ....');
