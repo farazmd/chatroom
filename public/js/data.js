@@ -1,4 +1,4 @@
-$(function(){
+$(function() {
     var socket = io.connect(); // Socket Connection
 
     // html area variables
