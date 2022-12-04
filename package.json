@@ -9,8 +9,8 @@
   "author": "Faraz",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
+    "body-parser": "^1.19.2",
+    "express": "^4.17.3",
     "express-handlebars": "^3.1.0",
     "express-session": "^1.16.2",
     "handlebars": "^4.3.0",
