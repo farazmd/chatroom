@@ -1,4 +1,4 @@
-FROM node:19.0.0
+FROM node:19.1
 
 WORKDIR /usr/src/chatroom
 
