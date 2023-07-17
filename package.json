@@ -15,7 +15,7 @@
     "express-session": "^1.16.2",
     "handlebars": "^4.3.0",
     "handlebars-helpers": "^0.10.0",
-    "mongoose": "^5.7.5",
+    "mongoose": "^5.13.20",
     "socket.io": "^2.2.0",
     "underscore.string": "^3.3.5"
   }
